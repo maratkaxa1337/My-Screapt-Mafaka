@@ -1,0 +1,78 @@
+CREATE DATABASE [dbTourE]
+
+USE [dbTourE]
+
+GO
+
+CREATE TABLE [Contract] (
+
+	[ID]	INT IDENTITY(0, 1),
+	[IDClient] INT CONSTRAINT FK_Contract_IDClient_Client_ID FOREIGN KEY REFERENCES [Client]([ID])			NOT NULL,
+	[IDEmployee] INT CONSTRAINT FK_Contract_IDEmployee_Employee_ID FOREIGN KEY REFERENCES [Employee]([ID])	NOT NULL,
+	[IDTour]		INT CONSTRAINT	FK_Contract_IDTour_Tour_ID FOREIGN KEY REFERENCES [Tour]([ID])			NOT NULL,
+	CONSTRAINT PK_Coutract_ID	PRIMARY KEY([ID])
+
+)
+
+GO
+
+CREATE TABLE [Client] (
+
+	[ID]	INT IDENTITY(0, 1),
+	[FirstName]		NVARCHAR(MAX)	NOT NULL,
+	[LastName]		NVARCHAR(MAX)	NOT NULL,
+	[MiddleName]	NVARCHAR(MAX)	NOT NULL,
+	[IDTour]		INT	CONSTRAINT FK_Client_IDTour_Tour_ID FOREIGN KEY REFERENCES [Tour]([ID])				NOT NULL,
+	CONSTRAINT	PK_Client_ID	PRIMARY KEY([ID])					
+
+)
+
+GO
+
+CREATE TABLE [Passport] (
+
+	[ID]		INT IDENTITY(0, 1),
+	[Region]	NVARCHAR(MAX)		NOT NULL,
+	[Number]	INT					NOT NULL,
+	[Series]	INT					NOT NULL,
+	[Date]		DATE				NOT NULL,
+	[IDClient]	INT CONSTRAINT FK_Passport_IDClient_ID FOREIGN KEY REFERENCES [Client]([ID])				NOT NULL,
+	CONSTRAINT PK_Passport_ID PRIMARY KEY ([ID])
+
+)
+
+GO
+
+CREATE TABLE [Tour] (
+
+	[ID]		INT IDENTITY(0, 1),
+	[Title]		NVARCHAR(MAX)		NOT NULL,
+	[Price]		NVARCHAR(MAX)		NOT NULL,
+	CONSTRAINT PK_Tour_ID PRIMARY KEY ([ID])
+
+)
+
+GO
+
+CREATE TABLE [Employee] (
+
+	[ID]		INT IDENTITY(0, 1),
+	[FirsName]		NVARCHAR(MAX)		NOT NULL,
+	[LastName]		NVARCHAR(MAX)		NOT NULL,
+	[MiddleName]	NVARCHAR(MAX)		NOT NULL,
+	[IDPosition]	CONSTRAINT FK_Employee_IDPosition_ID FOREIGN KEY REFERENCES [Position]([ID])			NOT NULL,
+	CONSTRAINT PK_Employee_ID PRIMARY KEY ([ID])
+
+)
+
+GO
+
+CREATE TABLE [Position] (
+
+	[ID]	INT IDENTITY(0, 1),
+	[Title]	NVARCHAR(MAX)		NOT NULL,
+	CONSTRAINT PK_Position_ID ([ID])
+
+)
+
+GO
